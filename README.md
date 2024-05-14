@@ -1,8 +1,8 @@
 # Bluehost
-### Table of Contents
-#### 1. Description
-#### 2. Links
-#### 3. Downloads
+## Table of Contents
+### 1. Description
+### 2. Links
+### 3. Downloads
 
 
 ### 1.   Description
