@@ -1,4 +1,4 @@
-# Bluehost
+# Bluehost / Data Encrypter
 ## Table of Contents
 ### 1. Description
 ### 2. Links
