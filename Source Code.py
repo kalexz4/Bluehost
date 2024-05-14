@@ -1,8 +1,7 @@
+import tkinter as tk
+from tkinter import filedialog, colorchooser
 from cryptography.fernet import Fernet
 import os
-import tkinter as tk
-from tkinter import filedialog
-from tkinter import ttk
 
 def generate_key():
     return Fernet.generate_key()
@@ -48,26 +47,55 @@ def decrypt_selected_files():
         else:
             status_label.config(text=f"File '{file_path}' not found.")
 
+def open_color_picker(attribute):
+    color = colorchooser.askcolor()[1]
+    if color:
+        if attribute == 'background':
+            root.configure(bg=color)
+            custom_button.configure(bg=color)  # Change Customize button background color
+        elif attribute == 'foreground':
+            root.configure(fg=color)
+            custom_button.configure(fg=color)
+        elif attribute == 'button':
+            encrypt_button.configure(bg=color)
+            decrypt_button.configure(bg=color)
+
+            # Update Customize button background color
+            custom_button.configure(bg=color)
+
 # Create GUI window
 root = tk.Tk()
 root.title("File Encryption Tool")
 root.geometry("600x400")  # Set window size
-root.configure(bg="black")  # Set background color
+
+# Set default colors
+root.configure(bg="black")
 
 # Create frame for buttons
 button_frame = tk.Frame(root, bg="black")
-button_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
 # Create Encrypt button
-encrypt_button = tk.Button(button_frame, text="Encrypt Files", command=encrypt_selected_files, bg="green", fg="white", width=20)
-encrypt_button.grid(row=0, column=0, padx=10, pady=10)
+encrypt_button = tk.Button(button_frame, text="Encrypt Files (Ctrl+E)", command=encrypt_selected_files, bg="green", fg="white")
+encrypt_button.pack(side=tk.LEFT, padx=10)
 
 # Create Decrypt button
-decrypt_button = tk.Button(button_frame, text="Decrypt Files", command=decrypt_selected_files, bg="green", fg="white", width=20)
-decrypt_button.grid(row=0, column=1, padx=10, pady=10)
+decrypt_button = tk.Button(button_frame, text="Decrypt Files (Ctrl+D)", command=decrypt_selected_files, bg="green", fg="white")
+decrypt_button.pack(side=tk.LEFT, padx=10)
+
+# Pack the buttons frame at the center, slightly higher
+button_frame.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+
+# Create Customization button
+custom_button = tk.Button(root, text="Customize", command=lambda: open_color_picker('button'), width=25, bg="green", fg="white")
+custom_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+# Function to bind tooltip to button
+def bind_tooltip(widget, text):
+    widget.bind("<Enter>", lambda event: status_label.config(text=text))
+    widget.bind("<Leave>", lambda event: status_label.config(text=""))
 
 # Status label
-status_label = tk.Label(root, text="", width=50, bg="black", fg="white")
+status_label = tk.Label(root, text="", width=50)
 status_label.pack()
 
 root.mainloop()
