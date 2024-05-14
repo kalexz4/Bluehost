@@ -1,5 +1,3 @@
-// Source Code Below
-
 from cryptography.fernet import Fernet
 import os
 import tkinter as tk
